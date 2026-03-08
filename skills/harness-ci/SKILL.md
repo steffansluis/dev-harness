@@ -1,0 +1,214 @@
+---
+name: harness-ci
+description: Generate or audit a CI configuration for the detected stack. Includes lint → test+coverage → build → smoke-test → acceptance pipeline.
+triggers:
+  - generate CI
+  - setup CI
+  - audit CI
+  - GitHub Actions
+  - harness-ci
+  - fix CI
+  - add CI
+---
+
+# harness-ci
+
+You generate or audit CI configuration for this project. Follow these steps.
+
+---
+
+## Step 1: Detect the Stack
+
+Read project root files to detect the stack (see `skills/harness-work/references/stack-detection.md`).
+
+Record: stack, package manager, lint command, test command, build command, server start command,
+e2e command, port, dist directory.
+
+---
+
+## Step 2: Check Existing CI
+
+Read `.github/workflows/ci.yml` (or any files in `.github/workflows/`).
+
+If no CI config exists → go to Step 3 (Generate).
+If CI config exists → go to Step 4 (Audit).
+
+---
+
+## Step 3: Generate CI Config
+
+Select the matching template from `skills/harness-setup/references/`:
+- Node/TS → `ci-node.yml`
+- Ruby → `ci-ruby.yml`
+- Python → `ci-python.yml`
+- Go → `ci-go.yml`
+- Unknown/other → `ci-generic.yml`
+
+Substitute all placeholders with the detected values.
+
+**Always include these elements (learned from lifetodo):**
+
+**Element 1 — Server smoke test before acceptance tests:**
+```yaml
+- name: Wait for server (smoke test)
+  run: |
+    for i in $(seq 1 30); do
+      curl -sf http://localhost:<PORT>/ && echo "Server ready" && exit 0
+      echo "Waiting… ($i)"
+      sleep 1
+    done
+    echo "Server did not start in time" && exit 1
+```
+This step runs *before* the acceptance test runner. A broken server script fails fast (seconds)
+rather than timing out across all acceptance tests (minutes).
+
+**Element 2 — Artifact uploads for every gate output:**
+- `coverage/` → `coverage-report` artifact, 30-day retention
+- `dist/` → `build-${{ github.sha }}` artifact, 30-day retention
+- `e2e/screenshots/` → `e2e-output-${{ github.sha }}` artifact, 90-day retention
+- `e2e/report/` → `playwright-report-${{ github.sha }}` artifact, 30-day retention, `if: failure()`
+
+**Element 3 — CI on all branches:**
+```yaml
+on:
+  push:
+  pull_request:
+    branches: [main, master]
+```
+The `push:` with no branch filter runs CI on every push, catching failures before a PR is opened.
+
+Write the generated config to `.github/workflows/ci.yml`.
+
+---
+
+## Step 4: Audit Existing CI
+
+Check the existing CI config against this checklist. Report each item as PASS / FAIL / MISSING:
+
+```
+CI Audit Report
+===============
+
+Pipeline structure:
+  [PASS/FAIL] lint job exists
+  [PASS/FAIL] test + coverage job exists
+  [PASS/FAIL] build job exists (if project has a build step)
+  [PASS/FAIL] acceptance test job exists (if project has e2e tests)
+  [PASS/FAIL] jobs run in dependency order (test after lint, build after test, e2e after build)
+
+CI triggers:
+  [PASS/FAIL] runs on push (all branches, not just master/main)
+  [PASS/FAIL] runs on pull_request
+
+Smoke test:
+  [PASS/FAIL] server smoke test step exists before acceptance tests
+              FAIL = acceptance tests may time out instead of failing fast on server errors
+
+Artifacts:
+  [PASS/FAIL] coverage report uploaded as artifact
+  [PASS/FAIL] build output uploaded as artifact
+  [PASS/FAIL] e2e screenshots/output uploaded as artifact
+  [PASS/FAIL] playwright/e2e report uploaded on failure
+
+Commands:
+  [PASS/FAIL] install command matches detected package manager
+  [PASS/FAIL] test command matches scripts in package.json / Gemfile / go.mod
+  [PASS/FAIL] lint command matches scripts in package.json / rubocop / golangci-lint
+```
+
+For any FAIL or MISSING item, provide the specific fix.
+
+---
+
+## Step 5: Gitignore Check
+
+Remind the user to verify these directories are in `.gitignore`:
+
+```
+  [ ] coverage/          (test coverage — uploaded as CI artifact, not committed)
+  [ ] dist/              (build output — uploaded as CI artifact, not committed)
+  [ ] e2e/report/        (Playwright report — uploaded as CI artifact, not committed)
+  [ ] test-results/      (Playwright test-results/)
+  [ ] playwright-report/ (alternate Playwright report dir)
+```
+
+**Rule:** If any of these directories are tracked by git, remove them from git and add them
+to `.gitignore` immediately. Generated output in git creates noise in diffs and inflates
+repository size.
+
+Check with:
+```bash
+git ls-files coverage/ dist/ e2e/report/ test-results/ playwright-report/
+# Any output means those files are tracked and should be removed
+```
+
+---
+
+## Step 6: Web Project — Static File Server
+
+For Node/TS projects that export a static web build (e.g. Expo + `expo export --platform web`,
+Next.js static export), a custom static server with `COOP/COEP` headers may be required
+if the app uses `SharedArrayBuffer` (e.g. SQLite WASM).
+
+If the project uses `expo-sqlite` v15+, `sql.js`, or any WASM module that requires
+`SharedArrayBuffer`, generate a minimal serve script at `scripts/serve-web.mjs`:
+
+```js
+#!/usr/bin/env node
+// Serves dist/ with COOP/COEP headers required for SharedArrayBuffer (SQLite WASM, etc.)
+import { createServer } from 'http';
+import { readFileSync, statSync } from 'fs';
+import { resolve, extname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+const PORT = Number(process.env.PORT ?? 4173);
+const DIST = resolve(fileURLToPath(import.meta.url), '../../dist');
+
+const MIME = {
+  '.html': 'text/html; charset=utf-8',
+  '.js': 'application/javascript',
+  '.mjs': 'application/javascript',
+  '.css': 'text/css',
+  '.json': 'application/json',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.svg': 'image/svg+xml',
+  '.wasm': 'application/wasm',
+  '.ico': 'image/x-icon',
+  '.ttf': 'font/ttf',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+};
+
+function isFile(p) {
+  try { return statSync(p).isFile(); } catch { return false; }
+}
+
+function resolveFile(urlPath) {
+  const exact = join(DIST, urlPath);
+  if (isFile(exact)) return exact;
+  const withHtml = exact.replace(/\/$/, '') + '.html';
+  if (isFile(withHtml)) return withHtml;
+  return join(DIST, 'index.html'); // SPA fallback
+}
+
+createServer((req, res) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+
+  const filePath = resolveFile((req.url ?? '/').split('?')[0]);
+  const mime = MIME[extname(filePath)] ?? 'application/octet-stream';
+
+  try {
+    const content = readFileSync(filePath);
+    res.writeHead(200, { 'Content-Type': mime });
+    res.end(content);
+  } catch {
+    if (!res.headersSent) { res.writeHead(404); res.end('Not found'); }
+  }
+}).listen(PORT, () => console.log(`Serving ${DIST} at http://localhost:${PORT}`));
+```
+
+**Note:** The critical bug to avoid — do NOT use `filePath === DIST` to detect root requests.
+`path.join` returns a path with a trailing slash for directory matches, so the equality always
+fails. Use `isFile()` checks instead.
