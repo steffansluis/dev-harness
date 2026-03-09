@@ -16,8 +16,8 @@ Each phase lives in its own file. This index links to all phases.
 | [Phase 4](phase-4.md) | Local vs Remote Gates | complete |
 | [Phase 5](phase-5.md) | Paradigms and /harness-reflect | complete |
 | [Phase 6](phase-6.md) | Guide Compliance and Distribution Readiness | complete |
-| [Phase 7](phase-7.md) | Skill-Creator Compliance and Eval Coverage | active |
-| [Phase 8](phase-8.md) | harness-cycle Skill | upcoming |
+| [Phase 7](phase-7.md) | Skill-Creator Compliance and Eval Coverage | complete |
+| [Phase 8](phase-8.md) | harness-cycle Skill | active |
 | [Phase 9](phase-9.md) | Description Optimization | upcoming |
 | [Phase 10](phase-10.md) | `/harness-release` skill | upcoming |
 | [Phase 11](phase-11.md) | Hook Guardrails | upcoming |

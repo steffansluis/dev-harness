@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Test: All 7 skills pass the skill-creator audit checklist
+# Test: All 8 skills pass the skill-creator audit checklist
 # AC: No CRITICAL or IMPORTANT findings on description quality, triggering accuracy,
 #     or structural completeness
 # Ref: "The Complete Guide to Building Skills for Claude" p.30 (Reference A: Quick checklist)
@@ -23,6 +23,7 @@ SKILLS=(
   harness-ci
   harness-init
   harness-reflect
+  harness-cycle
 )
 
 for skill in "${SKILLS[@]}"; do

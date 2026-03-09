@@ -22,6 +22,7 @@ SKILLS=(
   harness-ci
   harness-init
   harness-reflect
+  harness-cycle
 )
 
 for skill in "${SKILLS[@]}"; do
