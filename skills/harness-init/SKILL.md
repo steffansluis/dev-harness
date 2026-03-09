@@ -14,6 +14,9 @@ triggers:
 You generate a `harness/` directory for this project. The harness defines work, review,
 and release constraints separate from the `plans/` state machine.
 
+Optionally accepts a `--paradigm <name>` flag. Available paradigms are defined in
+`skills/harness-init/paradigms/`. Each paradigm pre-selects which gates are enabled.
+
 Follow these steps in order.
 
 ---
@@ -30,14 +33,34 @@ If no `harness/` directory exists, proceed to Step 2.
 
 ---
 
-## Step 2: Detect the Stack
+## Step 2: Resolve Paradigm and Stack
+
+**If `--paradigm <name>` was supplied:**
+
+1. Read `skills/harness-init/paradigms/<name>.md`.
+2. Use the gate enabled/disabled table from the paradigm file — this pre-selects which
+   gates are active without manual editing.
+3. Still detect the stack (below) to substitute concrete commands into templates.
+
+Available paradigms: `web-app`, `api-service`, `cli-tool`
+(see `skills/harness-init/paradigms/` for the full list and their gate sets).
+
+If an unrecognised paradigm name is supplied, list the available paradigms and ask the
+user to choose one or proceed without a paradigm.
+
+**If no `--paradigm` flag is supplied (default):**
+
+Determine gate selection from the detected stack: infer a paradigm from the dependencies
+(e.g. `react`/`next` → `web-app`; no UI deps → `api-service` or `cli-tool`). Ask the
+user to confirm if the inferred paradigm is not obvious.
+
+**Detect the stack** (for all cases):
 
 Read the project root for these files (in priority order):
 `package.json`, `Gemfile`, `go.mod`, `Cargo.toml`, `pyproject.toml`, `requirements.txt`
 
 Record: **stack name**, **test command**, **lint command**, **coverage command**.
 
-This information is used to tailor the harness content to the project's actual tooling.
 See `skills/harness-work/references/stack-detection.md` for the full detection algorithm.
 
 ---

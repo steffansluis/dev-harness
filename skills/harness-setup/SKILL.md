@@ -13,6 +13,10 @@ triggers:
 
 You are setting up a development harness for this project. Follow these steps in order.
 
+Optionally accepts `--paradigm <name>` (e.g. `--paradigm api-service`). When supplied,
+the harness gate set is pre-selected from the named paradigm without manual editing.
+Available paradigms: `web-app`, `api-service`, `cli-tool` (see `skills/harness-init/paradigms/`).
+
 ---
 
 ## Step 1: Detect the Stack
@@ -70,6 +74,18 @@ If `Plans.md` already exists but `plans/` does not:
 
 If `plans/index.md` already exists, the setup is complete. Report its current state and skip
 this step.
+
+---
+
+## Step 2c: Apply Paradigm Gate Set (if --paradigm supplied)
+
+If `--paradigm <name>` was supplied, read the matching paradigm file from
+`skills/harness-init/paradigms/<name>.md` and use its gate enabled/disabled table to
+configure which gates are active in the generated `harness/`. This means the developer
+gets the correct gate set without manually editing any gate files.
+
+If no `--paradigm` flag was given, skip this step and generate the default harness
+(all gates opt-in, no gates pre-enabled).
 
 ---
 
