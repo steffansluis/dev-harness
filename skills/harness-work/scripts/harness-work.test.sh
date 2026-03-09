@@ -10,7 +10,7 @@ FAIL=0
 pass() { echo "  PASS: $1"; PASS=$((PASS+1)); }
 fail() { echo "  FAIL: $1"; FAIL=$((FAIL+1)); }
 
-SKILL="$(dirname "$0")/SKILL.md"
+SKILL="$(dirname "$0")/../SKILL.md"
 
 echo "=== harness-work skill validation ==="
 

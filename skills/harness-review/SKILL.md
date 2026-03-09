@@ -1,6 +1,6 @@
 ---
 name: harness-review
-description: Structured multi-perspective code review (Security, Performance, Quality, Accessibility). Run between phases or after completing a feature.
+description: Performs a structured multi-perspective code review (Security, Performance, Quality, Accessibility) of recent changes and proposes or blocks a commit. Use when user says 'review', 'harness-review', 'code review', 'check my changes', 'review PR', or finishes a phase. Do not use for planning (use harness-plan) or executing tasks (use harness-work).
 triggers:
   - review
   - harness-review
@@ -8,6 +8,13 @@ triggers:
   - code review
   - phase review
   - review this
+license: MIT
+compatibility: Claude Code, Claude.ai
+metadata:
+  author: dev-harness
+  version: 1.0.0
+  category: quality
+  tags: [code-review, security, accessibility]
 ---
 
 # harness-review
@@ -171,3 +178,19 @@ After fixes, re-run `/harness-review`.
   and Z; extract Z into its own function" is a finding.
 - Do not flag stylistic preferences as IMPORTANT. Reserve IMPORTANT for bugs, security issues,
   accessibility blockers, and correctness problems.
+
+---
+
+## Examples
+
+### Example 1: End-of-phase review on a React Native project
+
+User says: "harness-review" (after completing all Phase 3 tasks).
+
+Actions:
+1. Run `git diff HEAD~1 --stat` to see changed files
+2. Determine project type: React Native (has Accessibility dimension)
+3. Review each perspective — find one IMPORTANT: missing `accessibilityRole` on a Pressable
+4. Output table with Outcome: REQUEST_CHANGES
+
+Result: User sees a structured table with one IMPORTANT Accessibility finding; commits are blocked until the fix is applied and `/harness-review` is re-run.

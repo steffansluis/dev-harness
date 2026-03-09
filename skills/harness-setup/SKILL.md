@@ -1,12 +1,19 @@
 ---
 name: harness-setup
-description: Scaffold a development harness for a new or existing project. Creates plans/ directory, generates CI config, and prints .gitignore checklist.
+description: Scaffolds a development harness for a new or existing project: creates the plans/ directory, generates a CI config, and prints a .gitignore checklist. Accepts --paradigm flag (web-app, api-service, cli-tool). Use when user says 'setup harness', 'init project', 'scaffold', 'new project', 'initialize harness', or starts a project from scratch.
 triggers:
   - setup harness
   - init project
   - scaffold
   - new project
   - initialize harness
+license: MIT
+compatibility: Claude Code, Claude.ai
+metadata:
+  author: dev-harness
+  version: 1.0.0
+  category: productivity
+  tags: [setup, scaffolding, ci, project-init]
 ---
 
 # harness-setup
@@ -168,3 +175,36 @@ Skills available:
   /harness-review — structured multi-perspective code review
   /harness-ci     — generate or audit CI config
 ```
+
+---
+
+## Common Issues
+
+**Error:** `plans/index.md` already exists but phase statuses are stale (all show `upcoming` after work is done).
+**Cause:** Phase statuses in `plans/index.md` are not updated automatically; they must be maintained manually or by `harness-work`.
+**Solution:** Read each `plans/phase-N.md`, check whether all tasks are `cc:done`, and update `plans/index.md` statuses to `complete` / `active` / `upcoming` accordingly.
+
+**Error:** `.github/workflows/ci.yml` already exists but is missing a lint or test step.
+**Cause:** The CI file was created manually or by an older version of the skill.
+**Solution:** Do not overwrite — instead report the audit checklist (lint step, test+coverage step, build step, smoke test, artifact uploads) and let the user decide which gaps to fix.
+
+**Error:** Migration from flat `Plans.md` produces a `plans/phase-1.md` that is missing later phases.
+**Cause:** The migration logic only created a file for Phase 1 rather than one file per phase found.
+**Solution:** Re-read `Plans.md`, identify every phase heading, and create a `plans/phase-N.md` for each one, copying all task rows and preserving their status markers.
+
+---
+
+## Examples
+
+### Example 1: Setting up a new Node.js API project
+
+User says: "setup harness --paradigm api-service"
+
+Actions:
+1. Read `package.json` → detect Node stack with `npm run test` and `npm run lint`
+2. Create `plans/index.md` and `plans/phase-1.md` from templates
+3. Read `skills/harness-init/paradigms/api-service.md` → enable readme + acceptance gates only
+4. Generate `.github/workflows/ci.yml` using the Node CI template
+5. Print .gitignore checklist
+
+Result: User sees a complete `plans/` directory, a working CI config with lint and test steps, and a checklist of .gitignore entries to verify — ready to start the first task.

@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches: [main, master]
+
+# dev-harness is a markdown-only plugin project.
+# No build artefacts or coverage thresholds apply.
+# Lint validates skill file structure; acceptance tests verify skill behaviour.
+#
+# Substitute ACCEPTANCE_TEST_CMD once an acceptance test harness is chosen.
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Validate that every skill directory contains a SKILL.md
+      - name: Check skill structure
+        run: |
+          for dir in skills/*/; do
+            if [ ! -f "${dir}SKILL.md" ]; then
+              echo "Missing SKILL.md in ${dir}" && exit 1
+            fi
+          done
+          echo "All skill directories have SKILL.md"
+
+      # Validate Plans.md exists and contains status markers
+      - name: Check Plans.md
+        run: |
+          if [ ! -f Plans.md ]; then
+            echo "Plans.md missing" && exit 1
+          fi
+          echo "Plans.md present"
+
+  acceptance-tests:
+    name: Acceptance Tests
+    runs-on: ubuntu-latest
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v4
+
+      # TODO: substitute with actual acceptance test command once harness is chosen
+      # e.g. bun test / pytest / go test ./...
+      - name: Run acceptance tests
+        run: echo "No acceptance tests yet — add ACCEPTANCE_TEST_CMD here"

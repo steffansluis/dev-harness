@@ -8,6 +8,7 @@ set -euo pipefail
 PASS=0
 FAIL=0
 DIR="$(dirname "$0")"
+PARADIGMS_DIR="$DIR/../paradigms"
 
 pass() { echo "  PASS: $1"; PASS=$((PASS+1)); }
 fail() { echo "  FAIL: $1"; FAIL=$((FAIL+1)); }
@@ -15,7 +16,7 @@ fail() { echo "  FAIL: $1"; FAIL=$((FAIL+1)); }
 echo "=== paradigm format definition ==="
 
 # 1. Paradigms directory exists
-if [[ -d "$DIR" ]]; then pass "paradigms/ directory exists"; else fail "paradigms/ directory missing"; fi
+if [[ -d "$PARADIGMS_DIR" ]]; then pass "paradigms/ directory exists"; else fail "paradigms/ directory missing"; fi
 
 # 2. Shared validator exists and is executable
 if [[ -x "$DIR/validate-paradigm.sh" ]]; then
@@ -25,7 +26,7 @@ else
 fi
 
 # 3. At least one paradigm file exists
-PARADIGM_COUNT=$(find "$DIR" -maxdepth 1 -name "*.md" | wc -l)
+PARADIGM_COUNT=$(find "$PARADIGMS_DIR" -maxdepth 1 -name "*.md" | wc -l)
 if [[ "$PARADIGM_COUNT" -gt 0 ]]; then
   pass "at least one paradigm file present ($PARADIGM_COUNT found)"
 else
@@ -34,7 +35,7 @@ fi
 
 # 4. All paradigm .md files pass the shared validator
 FAILED_PARADIGMS=0
-for pf in "$DIR"/*.md; do
+for pf in "$PARADIGMS_DIR"/*.md; do
   [[ -f "$pf" ]] || continue
   if bash "$DIR/validate-paradigm.sh" "$pf" > /dev/null 2>&1; then
     pass "$(basename "$pf") passes structural validation"
@@ -46,7 +47,7 @@ for pf in "$DIR"/*.md; do
 done
 
 # 5. harness-init SKILL.md references the paradigms directory
-SKILL="$DIR/../SKILL.md"
+SKILL="$DIR/../SKILL.md"  # scripts/../SKILL.md = harness-init/SKILL.md
 if grep -qiE "paradigm" "$SKILL" 2>/dev/null; then
   pass "harness-init skill references paradigms"
 else

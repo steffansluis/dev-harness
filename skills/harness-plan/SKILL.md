@@ -1,6 +1,6 @@
 ---
 name: harness-plan
-description: Create or update plans/ tasks with proper acceptance criteria and status tracking.
+description: Manages the plans/ task state machine — adds tasks with acceptance criteria, updates task status, and reports phase progress. Use when user says 'add task', 'new task', 'plan next phase', 'what's next', 'harness-plan', or wants to track a new piece of work. Do not use for executing tasks (use harness-work) or reviewing code (use harness-review).
 triggers:
   - add task
   - create plan
@@ -9,6 +9,13 @@ triggers:
   - harness-plan
   - new task
   - plan next phase
+license: MIT
+compatibility: Claude Code, Claude.ai
+metadata:
+  author: dev-harness
+  version: 1.0.0
+  category: productivity
+  tags: [planning, tdd, task-management]
 ---
 
 # harness-plan
@@ -95,6 +102,22 @@ If all tasks in the current phase are `cc:done`, say:
 ```
 Phase N is complete. Run /harness-review before starting Phase N+1.
 ```
+
+---
+
+## Examples
+
+### Example 1: Adding a new task mid-phase
+
+User says: "Add a task to cache API responses in Redis."
+
+Actions:
+1. Read `plans/index.md` to find the active phase file
+2. Check for existing `cc:WIP` tasks (warn if 3+)
+3. Ask: "What does a user see or experience when caching is working?"
+4. Write the agreed task row to the active `plans/phase-N.md`
+
+Result: A new `cc:TODO` row appears in the active phase file with a one-sentence user-visible AC.
 
 ---
 

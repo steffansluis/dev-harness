@@ -1,6 +1,6 @@
 ---
 name: harness-work
-description: Execute the next plans/ task using the TDD loop. Stack-aware: detects test runner, lint command, and package manager automatically.
+description: Executes the next cc:TODO task from plans/ using a Red→Green→Refactor→Gate TDD loop. Detects stack automatically (Node, Ruby, Go, Rust, Python). Use when user says 'harness-work', 'do the work', 'next task', 'implement', 'build this', or 'execute task'. Do not use for planning work (use harness-plan) or reviewing (use harness-review).
 triggers:
   - implement
   - execute task
@@ -9,6 +9,13 @@ triggers:
   - next task
   - build this
   - work on
+license: MIT
+compatibility: Claude Code, Claude.ai
+metadata:
+  author: dev-harness
+  version: 1.0.0
+  category: productivity
+  tags: [tdd, development, automation]
 ---
 
 # harness-work
@@ -154,6 +161,26 @@ AC verified: <restate the AC>
 
 ---
 
+## Examples
+
+### Example 1: Executing a Node/TypeScript task
+
+User says: "harness-work" (or "next task" / "do the work").
+
+Actions:
+1. Read `plans/index.md` → find active phase → find next `cc:TODO` task → mark `cc:WIP`
+2. Detect stack: read `package.json` → `packageManager: bun`, `scripts.test: jest`
+3. Write failing test asserting the AC behaviour
+4. Run `bun run test` — confirm red
+5. Write minimum implementation to pass
+6. Run `bun run test` — confirm green
+7. Refactor, run lint (`bun run lint`) and test again
+8. Mark `cc:done` in `plans/phase-N.md`
+
+Result: The task moves from `cc:WIP` to `cc:done` with lint and tests passing.
+
+---
+
 ## Known Failure Patterns to Avoid
 
 **Silent correctness failures:** When writing test fixtures, derive values from the same
@@ -166,3 +193,23 @@ Add a task to the active `plans/phase-N.md` to track it explicitly.
 
 **Generated output:** If this task introduces a new tool that generates output
 (reports, screenshots, build artifacts), update `.gitignore` in the same commit.
+
+---
+
+## Common Issues
+
+**Error:** No stack detected — lint and test commands are unknown.
+**Cause:** Project root has no `package.json`, `Gemfile`, `go.mod`, `Cargo.toml`, or `pyproject.toml`.
+**Solution:** Create the missing manifest file, or ask the user to specify their lint and test commands manually before proceeding.
+
+**Error:** Tests pass but coverage gate fails.
+**Cause:** The new code path added by this task is not exercised by the test written in the Red step.
+**Solution:** Add a test case that exercises the specific branch or function added. Do not lower the coverage threshold — fix the test.
+
+**Error:** Lint fails after Green step with formatting or style errors.
+**Cause:** Code written during the Green step did not follow the project's style rules.
+**Solution:** Run the lint command, read each error, and fix the source. Do not add lint-ignore comments unless the suppression is genuinely justified — document the reason inline if so.
+
+**Error:** 3+ tasks are `cc:WIP` simultaneously.
+**Cause:** Previous tasks were not completed before starting new ones.
+**Solution:** Do not start this task. Finish or descope one of the WIP tasks first, then return here.

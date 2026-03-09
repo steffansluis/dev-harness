@@ -1,6 +1,6 @@
 ---
 name: harness-reflect
-description: Read the current harness, collect retrospective feedback, and propose targeted amendments to gate files and constraint documents.
+description: Reads the current harness/, collects structured retrospective feedback, and proposes diff-format amendments to gate files and constraint documents — applied only after explicit user acceptance. Use when user says 'harness-reflect', 'retrospective', 'reflect on harness', 'update harness', 'amend harness', or 'harness retrospective'.
 triggers:
   - harness-reflect
   - reflect on harness
@@ -8,6 +8,13 @@ triggers:
   - amend harness
   - harness retrospective
   - retrospective
+license: MIT
+compatibility: Claude Code, Claude.ai
+metadata:
+  author: dev-harness
+  version: 1.0.0
+  category: quality
+  tags: [retrospective, harness, continuous-improvement]
 ---
 
 # harness-reflect
@@ -116,3 +123,20 @@ Amendments discarded:
 
 Next: run /harness-work to continue with the next task.
 ```
+
+---
+
+## Examples
+
+### Example 1: Disabling a gate that doesn't apply
+
+User says: "harness-reflect" (after completing Phase 2).
+
+Actions:
+1. Read all `harness/` files — summarise: 3 gates enabled, i18n gate enabled but project is an internal tool
+2. Ask the 5 retrospective questions; user answers: i18n gate triggers false positives on log strings
+3. Propose one amendment: change `i18n.md` from `Enabled: yes` to `Enabled: no` with a skip reason
+4. User replies "1" to accept only that amendment
+5. Apply the single change to `harness/gates/i18n.md`
+
+Result: User sees a summary confirming the i18n gate was disabled; all other gates are unchanged.

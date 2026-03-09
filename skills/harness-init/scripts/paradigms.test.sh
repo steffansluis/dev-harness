@@ -8,6 +8,7 @@ set -euo pipefail
 PASS=0
 FAIL=0
 DIR="$(dirname "$0")"
+PARADIGMS_DIR="$DIR/../paradigms"
 
 pass() { echo "  PASS: $1"; PASS=$((PASS+1)); }
 fail() { echo "  FAIL: $1"; FAIL=$((FAIL+1)); }
@@ -16,7 +17,7 @@ echo "=== built-in paradigms validation ==="
 
 # 1. All three paradigm files exist
 for p in web-app api-service cli-tool; do
-  if [[ -f "$DIR/${p}.md" ]]; then
+  if [[ -f "$PARADIGMS_DIR/${p}.md" ]]; then
     pass "${p}.md exists"
   else
     fail "${p}.md missing"
@@ -25,7 +26,7 @@ done
 
 # 2. All three pass the shared structure validator
 for p in web-app api-service cli-tool; do
-  f="$DIR/${p}.md"
+  f="$PARADIGMS_DIR/${p}.md"
   [[ -f "$f" ]] || continue
   if bash "$DIR/validate-paradigm.sh" "$f" > /dev/null 2>&1; then
     pass "${p}.md passes structural validation"
@@ -36,13 +37,13 @@ for p in web-app api-service cli-tool; do
 done
 
 # 3. api-service: acceptance gate enabled, screenshots disabled
-if [[ -f "$DIR/api-service.md" ]]; then
-  if grep -iE "^\| acceptance\s*\| yes" "$DIR/api-service.md" > /dev/null 2>&1; then
+if [[ -f "$PARADIGMS_DIR/api-service.md" ]]; then
+  if grep -iE "^\| acceptance\s*\| yes" "$PARADIGMS_DIR/api-service.md" > /dev/null 2>&1; then
     pass "api-service: acceptance gate enabled"
   else
     fail "api-service: acceptance gate should be enabled"
   fi
-  if grep -iE "^\| screenshots\s*\| no" "$DIR/api-service.md" > /dev/null 2>&1; then
+  if grep -iE "^\| screenshots\s*\| no" "$PARADIGMS_DIR/api-service.md" > /dev/null 2>&1; then
     pass "api-service: screenshots gate disabled (no UI)"
   else
     fail "api-service: screenshots gate should be disabled (no UI)"
@@ -50,13 +51,13 @@ if [[ -f "$DIR/api-service.md" ]]; then
 fi
 
 # 4. cli-tool: screenshots and i18n disabled
-if [[ -f "$DIR/cli-tool.md" ]]; then
-  if grep -iE "^\| screenshots\s*\| no" "$DIR/cli-tool.md" > /dev/null 2>&1; then
+if [[ -f "$PARADIGMS_DIR/cli-tool.md" ]]; then
+  if grep -iE "^\| screenshots\s*\| no" "$PARADIGMS_DIR/cli-tool.md" > /dev/null 2>&1; then
     pass "cli-tool: screenshots gate disabled"
   else
     fail "cli-tool: screenshots gate should be disabled"
   fi
-  if grep -iE "^\| i18n\s*\| no" "$DIR/cli-tool.md" > /dev/null 2>&1; then
+  if grep -iE "^\| i18n\s*\| no" "$PARADIGMS_DIR/cli-tool.md" > /dev/null 2>&1; then
     pass "cli-tool: i18n gate disabled (no user-facing strings)"
   else
     fail "cli-tool: i18n gate should be disabled"
@@ -64,10 +65,10 @@ if [[ -f "$DIR/cli-tool.md" ]]; then
 fi
 
 # 5. web-app: all gates enabled
-if [[ -f "$DIR/web-app.md" ]]; then
+if [[ -f "$PARADIGMS_DIR/web-app.md" ]]; then
   ALL_YES=true
   for gate in design readme acceptance screenshots i18n; do
-    if ! grep -iE "^\| $gate\s*\| yes" "$DIR/web-app.md" > /dev/null 2>&1; then
+    if ! grep -iE "^\| $gate\s*\| yes" "$PARADIGMS_DIR/web-app.md" > /dev/null 2>&1; then
       ALL_YES=false
       fail "web-app: gate '$gate' should be enabled"
     fi

@@ -1,6 +1,6 @@
 ---
 name: harness-ci
-description: Generate or audit a CI configuration for the detected stack. Includes lint → test+coverage → build → smoke-test → acceptance pipeline.
+description: Generates or audits a CI configuration for the detected stack, covering lint → test+coverage → build → smoke-test → acceptance pipeline. Maps enabled harness gates to CI steps. Use when user says 'harness-ci', 'generate CI', 'set up CI', 'audit CI', 'GitHub Actions', or 'CI pipeline'.
 triggers:
   - generate CI
   - setup CI
@@ -9,6 +9,13 @@ triggers:
   - harness-ci
   - fix CI
   - add CI
+license: MIT
+compatibility: Claude Code, Claude.ai
+metadata:
+  author: dev-harness
+  version: 1.0.0
+  category: devops
+  tags: [ci, github-actions, automation, testing]
 ---
 
 # harness-ci
@@ -237,3 +244,35 @@ createServer((req, res) => {
 **Note:** The critical bug to avoid — do NOT use `filePath === DIST` to detect root requests.
 `path.join` returns a path with a trailing slash for directory matches, so the equality always
 fails. Use `isFile()` checks instead.
+
+---
+
+## Common Issues
+
+**Error:** Generated CI config references a test command that doesn't match `package.json`.
+**Cause:** Stack detection read `scripts.test` but the project overrides the command with a workspace-level runner (e.g. `turbo test`).
+**Solution:** Read `package.json` scripts carefully and prefer the exact string in `scripts.test`; do not substitute a guessed runner.
+
+**Error:** Gate step for an enabled gate is missing from the generated CI pipeline.
+**Cause:** `harness/gates/` was not read, or the gate's `Enabled:` field was not checked before emitting steps.
+**Solution:** Re-read each gate file in `harness/gates/`, check `Enabled: yes` before including the corresponding CI step, and verify the gate → CI step mapping table is complete.
+
+**Error:** Existing `ci.yml` audit reports false positives (missing steps that actually exist under a different name).
+**Cause:** Step detection used a too-narrow pattern (e.g. looking for literal `run: npm run lint` instead of any lint invocation).
+**Solution:** Search for the lint/test/build commands detected from the stack manifest rather than hard-coded strings.
+
+---
+
+## Examples
+
+### Example 1: Generating CI for a Go project with acceptance gate enabled
+
+User says: "harness-ci"
+
+Actions:
+1. Check `.github/workflows/ci.yml` — does not exist
+2. Read `go.mod` → detect Go stack; lint: `go vet ./...`, test: `go test ./...`
+3. Read `harness/gates/acceptance.md` → `Enabled: yes`, `Runs: remote`
+4. Generate `ci.yml` with lint → test → acceptance steps; skip screenshot and i18n steps (not enabled)
+
+Result: User sees a new `.github/workflows/ci.yml` with correctly mapped steps and a note on what to customise (e.g. Go version, environment variables).

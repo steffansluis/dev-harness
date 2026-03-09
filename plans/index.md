@@ -10,11 +10,12 @@ Each phase lives in its own file. This index links to all phases.
 
 | Phase | Name | Status |
 |-------|------|--------|
-| [Phase 1](phase-1.md) | Plans Directory Structure | active |
-| [Phase 2](phase-2.md) | Dynamic Harness Directory | upcoming |
-| [Phase 3](phase-3.md) | Extended Gate Set | upcoming |
-| [Phase 4](phase-4.md) | Local vs Remote Gates | upcoming |
-| [Phase 5](phase-5.md) | Paradigms and /harness-reflect | upcoming |
+| [Phase 1](phase-1.md) | Plans Directory Structure | complete |
+| [Phase 2](phase-2.md) | Dynamic Harness Directory | complete |
+| [Phase 3](phase-3.md) | Extended Gate Set | complete |
+| [Phase 4](phase-4.md) | Local vs Remote Gates | complete |
+| [Phase 5](phase-5.md) | Paradigms and /harness-reflect | complete |
+| [Phase 6](phase-6.md) | Guide Compliance and Distribution Readiness | active |
 
 ---
 
