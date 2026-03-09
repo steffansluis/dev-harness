@@ -1,0 +1,32 @@
+{
+  "name": "dev-harness-marketplace",
+  "metadata": {
+    "description": "dev-harness plugin marketplace"
+  },
+  "owner": {
+    "name": "steffansluis"
+  },
+  "plugins": [
+    {
+      "name": "dev-harness",
+      "source": "./",
+      "description": "Language-agnostic development harness: TDD loop, plans/ state machine, structured review, and CI scaffold.",
+      "author": {
+        "name": "steffansluis",
+        "url": "https://github.com/steffansluis"
+      },
+      "homepage": "https://github.com/steffansluis/dev-harness",
+      "repository": "https://github.com/steffansluis/dev-harness",
+      "license": "MIT",
+      "keywords": [
+        "claude-code",
+        "plugin",
+        "tdd",
+        "harness",
+        "workflow"
+      ],
+      "category": "productivity",
+      "strict": true
+    }
+  ]
+}

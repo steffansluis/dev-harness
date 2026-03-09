@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "description": "Language-agnostic TDD harness: Plans.md state machine, review gates, CI scaffold, and stack-aware TDD loop",
   "author": {
-    "name": "steffan",
-    "url": "https://github.com/steffan"
+    "name": "steffansluis",
+    "url": "https://github.com/steffansluis"
   },
-  "repository": "https://github.com/steffan/dev-harness",
+  "homepage": "https://github.com/steffansluis/dev-harness",
+  "repository": "https://github.com/steffansluis/dev-harness",
   "license": "MIT",
-  "keywords": ["tdd", "harness", "ci", "plans", "review", "claude-code"]
+  "keywords": [
+    "claude-code",
+    "plugin",
+    "tdd",
+    "harness",
+    "workflow"
+  ]
 }

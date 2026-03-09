@@ -9,13 +9,24 @@ Works with Node/TypeScript, Ruby, Python, Go, Rust, or any stack.
 
 ## Install
 
-**Claude Code (recommended):**
+**Claude Code (plugin — recommended):**
 
 ```bash
-# Clone the repo
-git clone https://github.com/steffansluis/dev-harness ~/.claude/skills/dev-harness
+# Start Claude Code in your project
+claude
 
-# Or place the skills/ directory in your Claude Code skills path
+# Add the marketplace & install
+/plugin marketplace add steffansluis/dev-harness
+/plugin install dev-harness@dev-harness-marketplace
+
+# Initialize your project
+/harness-setup
+```
+
+**Claude Code (manual):**
+
+```bash
+git clone https://github.com/steffansluis/dev-harness ~/.claude/plugins/dev-harness
 ```
 
 **Claude.ai:**
@@ -23,12 +34,6 @@ git clone https://github.com/steffansluis/dev-harness ~/.claude/skills/dev-harne
 1. Download or clone this repo
 2. Zip the `skills/` folder
 3. Open Claude.ai → Settings → Capabilities → Skills → Upload skill
-
-**Via plugin registry (once published):**
-
-```bash
-claude plugin install steffansluis/dev-harness
-```
 
 ---
 
@@ -127,6 +132,12 @@ See [METHODOLOGY.md](./METHODOLOGY.md) for the full methodology guide, including
 - The TDD loop and `plans/` state machine
 - Patterns of failure to avoid (silent correctness failures, accepted constraints)
 - The known Node+bun gotcha (`bun run test` vs `bun test`)
+
+---
+
+## Acknowledgments
+
+Inspired by [claude-code-harness](https://github.com/Chachamaru127/claude-code-harness) by Chachamaru.
 
 ---
 
