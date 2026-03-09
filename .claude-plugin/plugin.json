@@ -1,6 +1,6 @@
 {
   "name": "dev-harness",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Language-agnostic TDD harness: Plans.md state machine, review gates, CI scaffold, and stack-aware TDD loop",
   "author": {
     "name": "steffansluis",
