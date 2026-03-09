@@ -19,7 +19,7 @@ Each phase lives in its own file. This index links to all phases.
 | [Phase 7](phase-7.md) | Skill-Creator Compliance and Eval Coverage | complete |
 | [Phase 8](phase-8.md) | harness-cycle Skill | complete |
 | [Phase 9](phase-9.md) | Description Optimization | complete |
-| [Phase 10](phase-10.md) | `/harness-release` skill | upcoming |
+| [Phase 10](phase-10.md) | `/harness-release` skill | active |
 | [Phase 11](phase-11.md) | Hook Guardrails | upcoming |
 | [Phase 12](phase-12.md) | Quick-win skill improvements | upcoming |
 | [Phase 13](phase-13.md) | Comparative benchmark documentation | upcoming |

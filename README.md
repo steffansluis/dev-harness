@@ -50,6 +50,7 @@ After installing, open any project in Claude Code and run:
 /harness-review         # structured review only — use between phases or on specific diffs
 /harness-ci             # generate or audit CI config
 /harness-reflect        # retrospective: propose amendments to harness gates
+/harness-release        # cut a release: CHANGELOG entry, version bump, GitHub Release checklist
 ```
 
 **First time on a new project:**
@@ -116,6 +117,12 @@ mapping enabled harness gates to their CI steps. Or audits an existing config ag
 ### `/harness-reflect`
 Runs a structured retrospective: reads `harness/`, asks five feedback questions, and proposes
 targeted diff-format amendments to gate files — applied only after explicit acceptance.
+
+### `/harness-release`
+Cuts a versioned release: reads the current version from `plugin.json` or `package.json`,
+proposes the next semver bump (patch/minor/major), generates a Keep a Changelog entry from
+git commits, updates `CHANGELOG.md`, bumps the version file, and prints a step-by-step
+GitHub Release checklist with the exact `git tag` and `gh release create` commands.
 
 ---
 

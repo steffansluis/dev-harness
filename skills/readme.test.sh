@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Test: repo-level README.md exists and covers installation + all 7 skills + quick-start
+# Test: repo-level README.md exists and covers installation + all skills + quick-start
 # AC: A developer can install and start their first workflow in 5 minutes using only the README
 # Ref: "The Complete Guide to Building Skills for Claude" p.20
 
@@ -30,8 +30,8 @@ else
   fail "README missing installation or quick-start section"
 fi
 
-# 3. Each of the 7 skills is mentioned
-SKILLS=(harness-plan harness-work harness-review harness-setup harness-ci harness-init harness-reflect)
+# 3. Each skill is mentioned
+SKILLS=(harness-plan harness-work harness-review harness-setup harness-ci harness-init harness-reflect harness-release harness-cycle)
 for skill in "${SKILLS[@]}"; do
   if grep -qE "$skill" "$README"; then
     pass "README mentions $skill"
