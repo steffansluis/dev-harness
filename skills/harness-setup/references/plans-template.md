@@ -1,3 +1,6 @@
+<!-- DEPRECATED: superseded by index-template.md + phase-template.md (Phase 1 migration).
+     Kept for reference only. Do not use for new scaffolding. -->
+
 # Plans — <Project Name>
 
 Created: <YYYY-MM-DD>

@@ -1,6 +1,6 @@
 ---
 name: harness-work
-description: Execute the next Plans.md task using the TDD loop. Stack-aware: detects test runner, lint command, and package manager automatically.
+description: Execute the next plans/ task using the TDD loop. Stack-aware: detects test runner, lint command, and package manager automatically.
 triggers:
   - implement
   - execute task
@@ -13,14 +13,20 @@ triggers:
 
 # harness-work
 
-You execute tasks from Plans.md using a strict TDD loop. Follow these steps in order.
+You execute tasks from the `plans/` directory using a strict TDD loop. Follow these steps in order.
 
 ---
 
-## Step 1: Read Plans.md
+## Step 1: Read the plans/ directory
 
-Read `Plans.md`. Find the next `cc:TODO` task (lowest number in the current phase).
-Mark it `cc:WIP` in Plans.md before starting any implementation.
+Read `plans/index.md` to identify the **current active phase**: the lowest-numbered phase that
+still contains any `cc:WIP` or `cc:TODO` tasks. Read that phase file (e.g. `plans/phase-1.md`).
+
+Find the next `cc:TODO` task (lowest task number in the active phase file).
+Mark it `cc:WIP` in the phase file (e.g. `plans/phase-1.md`) before starting any implementation.
+
+**Co-existence:** If both `plans/index.md` and a flat `Plans.md` exist, always prefer `plans/`.
+Do not read from or write to the flat `Plans.md`.
 
 If 3+ tasks are already `cc:WIP`, warn the user and do not start a new one.
 
@@ -72,7 +78,7 @@ Record: **lint command** and **test command**.
 ## Step 3: State the Task Clearly
 
 Before writing any code, state:
-1. The task number and description from Plans.md
+1. The task number and description from the active `plans/phase-N.md`
 2. The acceptance criterion
 3. The test file you will create first
 4. What the failing test will assert
@@ -136,7 +142,7 @@ A test that passes but reduces coverage below the threshold is not done.
 
 ## Step 8: Mark cc:done
 
-Update Plans.md: change `cc:WIP` → `cc:done` for this task.
+Update the active `plans/phase-N.md`: change `cc:WIP` → `cc:done` for this task.
 
 Print a summary:
 ```
@@ -156,7 +162,7 @@ assumed initial states) that could be semantically wrong while the test passes.
 
 **Accepted constraints:** If you encounter an environment constraint (test runner
 incompatibility, missing dependency) that you cannot resolve, do NOT silently continue.
-Add a task to Plans.md to track it explicitly.
+Add a task to the active `plans/phase-N.md` to track it explicitly.
 
 **Generated output:** If this task introduces a new tool that generates output
 (reports, screenshots, build artifacts), update `.gitignore` in the same commit.

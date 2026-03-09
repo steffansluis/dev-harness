@@ -1,10 +1,10 @@
 ---
 name: harness-plan
-description: Create or update Plans.md tasks with proper acceptance criteria and status tracking.
+description: Create or update plans/ tasks with proper acceptance criteria and status tracking.
 triggers:
   - add task
   - create plan
-  - update Plans.md
+  - update plans
   - what's next
   - harness-plan
   - new task
@@ -13,19 +13,27 @@ triggers:
 
 # harness-plan
 
-You manage the Plans.md state machine. Follow these steps.
+You manage the `plans/` state machine. Follow these steps.
 
 ---
 
-## Step 1: Read Plans.md
+## Step 1: Read the plans/ directory
 
-Read the current `Plans.md`. If it does not exist, tell the user to run `/harness-setup` first.
+Read `plans/index.md` to get the list of phase files.
 
-Identify:
-- The current phase (last phase with any cc:WIP or cc:TODO tasks)
-- All cc:WIP tasks (there should be 0–2; warn if 3+)
-- All cc:TODO tasks (the backlog)
-- The next task to work on
+Identify the **current active phase**: the lowest-numbered phase file that still contains any `cc:WIP` or `cc:TODO` tasks. Read that phase file (e.g. `plans/phase-1.md`).
+
+From the active phase file, identify:
+- All `cc:WIP` tasks (there should be 0–2; warn if 3+)
+- All `cc:TODO` tasks (the backlog)
+- The next task to work on (first `cc:TODO` by task number)
+
+**Co-existence / migration:** If both `plans/index.md` and a flat `Plans.md` exist, always
+prefer `plans/`. Treat the flat `Plans.md` as a legacy file and do not read or write to it.
+If only `Plans.md` exists (no `plans/` directory), tell the user to run `/harness-setup` to
+migrate to the directory layout before continuing.
+
+If neither `plans/index.md` nor `Plans.md` exists, tell the user to run `/harness-setup` first.
 
 ---
 
@@ -57,12 +65,14 @@ Guide the user to write a well-formed task entry:
 
 If the user provides a task without an AC, ask: "What does a user see or experience when this task is complete?"
 
-**WIP limit warning:** If 3+ tasks are already cc:WIP, warn:
+**WIP limit warning:** If 3+ tasks are already `cc:WIP`, warn:
 ```
 Warning: 3 tasks are currently cc:WIP. Finish or descope one before adding more.
 ```
 
-After agreeing on the task text, write it to `Plans.md` in the correct phase table.
+After agreeing on the task text, write it to the correct phase file in `plans/` (e.g. `plans/phase-1.md`). Do not write to a flat `Plans.md`.
+
+If adding a new phase, also add a row to the `plans/index.md` phase table.
 
 ---
 
@@ -81,7 +91,7 @@ Phase N — <Phase Name>
 Next action: run /harness-work to execute task N.Y
 ```
 
-If all tasks in the current phase are cc:done, say:
+If all tasks in the current phase are `cc:done`, say:
 ```
 Phase N is complete. Run /harness-review before starting Phase N+1.
 ```
@@ -90,16 +100,16 @@ Phase N is complete. Run /harness-review before starting Phase N+1.
 
 ## Case C: Status Update
 
-If the user says a task is done, move it to cc:done in Plans.md.
-If they are starting a task, move it from cc:TODO to cc:WIP.
+If the user says a task is done, move it to `cc:done` in the correct `plans/phase-N.md` file.
+If they are starting a task, move it from `cc:TODO` to `cc:WIP` in the correct `plans/phase-N.md` file.
 
-Remind them: cc:done requires lint + tests to pass, not just implementation complete.
+Remind them: `cc:done` requires lint + tests to pass, not just implementation complete.
 
 ---
 
-## Plans.md Format
+## Phase File Format
 
-Always maintain this exact table format:
+Always maintain this exact table format within each `plans/phase-N.md`:
 
 ```markdown
 | # | Task | AC | Status |

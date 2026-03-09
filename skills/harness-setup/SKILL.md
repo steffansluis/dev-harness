@@ -1,6 +1,6 @@
 ---
 name: harness-setup
-description: Scaffold a development harness for a new or existing project. Creates Plans.md, generates CI config, and prints .gitignore checklist.
+description: Scaffold a development harness for a new or existing project. Creates plans/ directory, generates CI config, and prints .gitignore checklist.
 triggers:
   - setup harness
   - init project
@@ -41,16 +41,35 @@ Record: **stack name**, **package manager**, **test command**, **lint command**.
 
 ---
 
-## Step 2: Create Plans.md
+## Step 2: Create the plans/ directory
 
-If `Plans.md` does not exist, create it using the template at
-`skills/harness-setup/references/plans-template.md`.
+**New project (no plans/ and no Plans.md):**
 
-Replace `<Project Name>` with the actual project name (from `package.json` name field,
-directory name, or ask the user).
+1. Create the `plans/` directory.
+2. Create `plans/index.md` using the template at
+   `skills/harness-setup/references/index-template.md`.
+   Replace `<Project Name>` and `<Phase 1 Name>` with real values.
+3. Create `plans/phase-1.md` using the template at
+   `skills/harness-setup/references/phase-template.md`.
+   Replace `N` with `1` and fill in `<Phase Name>`.
 
-If `Plans.md` already exists, check whether it has an `AC` column in its task tables.
-If not, add the `AC` column and populate existing rows with `—` as a placeholder.
+**Existing project with flat Plans.md (migration):**
+
+If `Plans.md` already exists but `plans/` does not:
+1. Tell the user: "I found a flat Plans.md. I'll scaffold the plans/ directory and migrate
+   all phases. You can delete Plans.md once you've verified the migration."
+2. Read all phases from `Plans.md`.
+3. Create `plans/` and `plans/index.md`, listing every phase found with its name and status
+   (`active` for the lowest phase with any `cc:WIP`/`cc:TODO` tasks; `complete` for all-done
+   phases; `upcoming` for phases not yet started).
+4. Create a `plans/phase-N.md` file for **every phase** found in `Plans.md`, copying all
+   task rows and preserving their status markers.
+5. Leave the flat `Plans.md` in place; the user decides when to delete it.
+
+**Both plans/ and Plans.md exist:**
+
+If `plans/index.md` already exists, the setup is complete. Report its current state and skip
+this step.
 
 ---
 
@@ -112,7 +131,8 @@ Print a short summary:
 ```
 Harness set up. Your development workflow:
 
-1. Plans.md is your state machine:
+1. plans/ is your state machine:
+   plans/index.md → active phase → plans/phase-N.md
    cc:TODO → cc:WIP → cc:done
 
 2. TDD loop (per task):
@@ -127,7 +147,7 @@ Harness set up. Your development workflow:
 4. CI runs: lint → test+coverage → build → acceptance tests
 
 Skills available:
-  /harness-plan   — add tasks to Plans.md with acceptance criteria
+  /harness-plan   — add tasks to plans/ with acceptance criteria
   /harness-work   — execute the next cc:TODO task (TDD loop)
   /harness-review — structured multi-perspective code review
   /harness-ci     — generate or audit CI config
