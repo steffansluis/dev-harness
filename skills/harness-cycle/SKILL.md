@@ -97,6 +97,11 @@ ignore comments unless genuinely justified (document why inline).
 
 ## Step 3: Review
 
+**Important:** Always execute this step after Step 2, regardless of what the work involved.
+If Step 2 delegated to another skill (e.g. skill-creator, harness-work) or a long-running
+sub-workflow, that sub-workflow's completion does not end the cycle — return here and run
+the review before committing.
+
 Run a structured review of the changes made in Step 2. This mirrors the harness-review
 workflow but is scoped to the current task's diff.
 
