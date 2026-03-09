@@ -1,10 +1,13 @@
 # Gate: Screenshots
 
+**Enabled: no** — this project has no UI. Skills render as text in Claude Code;
+screenshot diffs are not applicable.
+
 UI tasks must include before/after screenshot artefacts linked in the task row before
 moving to `cc:done`. Provides a visual record of what changed and makes regressions
 visible during review.
 
-**Enabled:** opt-in — add this gate for web and mobile projects where tasks produce
+**Enabled (general):** opt-in — add this gate for web and mobile projects where tasks produce
 visible UI changes. Skip for CLI, API, and library projects with no user interface.
 
 **Runs: remote** — screenshot diff requires a full build and baseline; runs in CI on PR open.

@@ -44,6 +44,16 @@ State the task clearly:
 2. Acceptance criterion
 3. What you will build
 
+**Loop behaviour:** After completing Steps 2–4 for a task, re-read the phase file and
+check whether any `cc:TODO` tasks remain. If yes, immediately continue to the next
+`cc:TODO` task — do not stop or wait for user input between tasks. Repeat until all
+tasks in the phase are `cc:done`, then print:
+```
+Phase N complete — all tasks cc:done.
+Run /harness-review for a phase-end review before starting Phase N+1.
+```
+and stop.
+
 ---
 
 ## Step 2: TDD Loop

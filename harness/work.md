@@ -22,81 +22,32 @@ Gate     → Run lint AND tests; both must pass before marking cc:done
 
 ---
 
-## Lint Gate
+## Gate — Bash Test Suite
 
-Run the project's lint command (detected by `/harness-work` from the stack):
+This project is a markdown-only Claude Code plugin with no build toolchain. The gate is
+the project's bash test suite:
 
-| Stack | Lint command |
-|-------|-------------|
-| Node/TS (bun) | `bun run lint` |
-| Node/TS (npm) | `npm run lint` |
-| Ruby | `bundle exec rubocop --no-color` |
-| Go | `golangci-lint run` or `go vet ./...` |
-| Rust | `cargo clippy -- -D warnings` |
-| Python | `ruff check .` or `flake8 .` |
+```bash
+bash skills/*.test.sh
+```
 
-**Gate rules:**
-- Zero errors and zero warnings (or warnings-as-errors where configured)
-- Do not suppress lint errors with ignore comments unless genuinely justified; document why inline
-- Lint must pass on every file touched by the task, not just new files
-
----
-
-## Test Gate
-
-Run the project's test command:
-
-| Stack | Test command |
-|-------|-------------|
-| Node/TS (bun + jest) | `bun run test` |
-| Node/TS (npm) | `npm run test` |
-| Ruby (RSpec) | `bundle exec rspec` |
-| Go | `go test ./...` |
-| Rust | `cargo test` |
-| Python | `pytest` |
+All assertions must pass (0 failed). This replaces the generic lint, test, and coverage
+gates — those do not apply to this project.
 
 **Gate rules:**
-- All tests must pass — no skipped tests introduced by this task without a tracked reason
-- A test that fails intermittently is not cc:done
-
----
-
-## Coverage Gate
-
-Minimum: **80% line and branch coverage** across all files touched by the task.
-
-| Stack | Coverage command |
-|-------|----------------|
-| Node/TS | `bun run test -- --coverage` or `npm run test -- --coverage` |
-| Ruby (SimpleCov) | coverage reported by `bundle exec rspec` |
-| Go | `go test -coverprofile=coverage.out ./...` |
-| Rust | `cargo tarpaulin` (if installed) |
-| Python | `pytest --cov --cov-fail-under=80` |
-
-**Gate rules:**
-- Coverage must not drop below 80% after this task
-- A task that adds code but no tests, reducing coverage below 80%, is not cc:done
-- New branches introduced by the task must be tested
+- Before writing a new skill's SKILL.md, add it to the relevant SKILLS arrays in the test
+  scripts first — this creates the failing (Red) state
+- All assertions must pass before marking `cc:done`
+- New skills that have evals must also be added to `evals-coverage.test.sh`
+- The gate must complete without error; a non-zero exit code is not `cc:done`
 
 ---
 
 ## Local Gate Sequence
 
-The gates below are **local gates** — they run on the developer's machine before a task
-moves to `cc:done`. They must complete within **30 seconds** for a typical project. If they
-take longer, investigate: a slow lint pass or large test suite may need parallelisation or
-scoping to changed files only.
-
-Both lint AND tests (with coverage) must pass before marking `cc:done`:
-
 ```
-lint  →  test + coverage  →  cc:done
+bash skills/*.test.sh  →  cc:done
 ```
 
-If lint fails: fix the errors — do not suppress or skip.
-If tests fail: do not mark cc:done; investigate the failure.
-If coverage drops below 80%: add the missing tests before proceeding.
-
-**Remote gates** (build, acceptance tests, screenshot diffs, i18n check) run in CI or on
-PR open and are defined in `harness/release.md`. They do not block `cc:done` locally but
-must pass before merging to the main branch.
+**Remote gates** (CI skill-structure check) run on push and are defined in
+`harness/release.md`. They do not block `cc:done` locally but must pass before merging.

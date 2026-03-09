@@ -1,10 +1,13 @@
 # Gate: Design Artefact
 
+**Enabled: no** — this project is a markdown-only Claude Code plugin. Tasks are defined
+by acceptance criteria in `plans/phase-N.md`; no design artefact is needed or meaningful.
+
 A design artefact (mockup, wireframe, spec, or Figma link) must be linked in the task row
 before a task moves to `cc:WIP`. Prevents implementation starting without a shared visual
 or written specification to verify against.
 
-**Enabled:** opt-in — add this gate when your project requires design sign-off before coding.
+**Enabled (general):** opt-in — add this gate when your project requires design sign-off before coding.
 
 **Runs: local** — checked on the developer's machine at the point the task is moved to `cc:WIP`.
 
