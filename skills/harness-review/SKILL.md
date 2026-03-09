@@ -1,6 +1,6 @@
 ---
 name: harness-review
-description: Performs a structured multi-perspective code review (Security, Performance, Quality, Accessibility) of recent changes and proposes or blocks a commit. Use when user says 'review', 'harness-review', 'code review', 'check my changes', 'review PR', or finishes a phase. Do not use for planning (use harness-plan) or executing tasks (use harness-work).
+description: Performs a structured multi-perspective code review (Security, Performance, Quality, Accessibility) of recent changes and proposes or blocks a commit. Use this whenever the user wants to review code before committing — 'review my changes', 'check my code', 'review this before I merge', 'harness-review', 'phase review', 'any issues with my diff?', 'check my changes'. Trigger this at phase end or any time the user asks for a code review, audit, or check of recent changes — even informally. Do not use for planning (use harness-plan) or executing tasks (use harness-work).
 triggers:
   - review
   - harness-review

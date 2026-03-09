@@ -77,7 +77,7 @@ for skill in "${SKILLS[@]}"; do
 
   # description includes WHAT and WHEN
   DESC=$(echo "$FRONTMATTER" | awk '/^description:/{sub(/^description:[[:space:]]*/, ""); print}')
-  if echo "$DESC" | grep -qiE "use when|when user"; then
+  if echo "$DESC" | grep -qiE "use when|when user|use this when|trigger this"; then
     pass "$skill: description includes WHEN clause"
   else
     fail "$skill: description missing WHEN clause (IMPORTANT — vague description)"

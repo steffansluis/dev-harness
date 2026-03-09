@@ -1,6 +1,6 @@
 ---
 name: harness-ci
-description: Generates or audits a CI configuration for the detected stack, covering lint → test+coverage → build → smoke-test → acceptance pipeline. Maps enabled harness gates to CI steps. Use when user says 'harness-ci', 'generate CI', 'set up CI', 'audit CI', 'GitHub Actions', or 'CI pipeline'.
+description: Generates or audits a CI configuration for the detected stack, covering lint → test+coverage → build → smoke-test → acceptance pipeline. Maps enabled harness gates to CI steps. Use this whenever the user wants to set up, generate, or audit CI — 'generate a GitHub Actions pipeline', 'set up CI for my project', 'create CI config', 'audit my CI', 'harness-ci', 'I need a CI workflow'. Trigger this for any CI generation or audit request, even if the user just says 'I need CI for my project' without naming the skill. Do not use for initial harness scaffolding (use harness-setup).
 triggers:
   - generate CI
   - setup CI

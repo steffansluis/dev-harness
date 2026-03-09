@@ -1,6 +1,6 @@
 ---
 name: harness-plan
-description: Manages the plans/ task state machine — adds tasks with acceptance criteria, updates task status, and reports phase progress. Use when user says 'add task', 'new task', 'plan next phase', 'what's next', 'harness-plan', or wants to track a new piece of work. Do not use for executing tasks (use harness-work) or reviewing code (use harness-review).
+description: Manages the plans/ task state machine — adds tasks with acceptance criteria, updates status, and reports phase progress. Use this whenever the user wants to add, track, plan, or check the status of work: 'I need to track a new task', 'add a task for X', 'what's left in this phase?', 'plan the next phase', 'mark task N as done', 'what should I work on next?', 'harness-plan'. Trigger this for any request about managing work items, planning phases, or checking task status — even if the user doesn't say the skill name. Do not use for implementing tasks (use harness-work) or reviewing code (use harness-review).
 triggers:
   - add task
   - create plan

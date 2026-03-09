@@ -1,6 +1,6 @@
 ---
 name: harness-setup
-description: Scaffolds a development harness for a new or existing project: creates the plans/ directory, generates a CI config, and prints a .gitignore checklist. Accepts --paradigm flag (web-app, api-service, cli-tool). Use when user says 'setup harness', 'init project', 'scaffold', 'new project', 'initialize harness', or starts a project from scratch.
+description: Scaffolds a development harness for a new or existing project: creates plans/, generates a CI config, and prints a .gitignore checklist. Accepts --paradigm flag (web-app, api-service, cli-tool). Use this whenever someone is starting a new project or adding the harness to an existing one — 'set up a harness for my project', 'scaffold this project', 'initialize harness', 'new project setup', 'harness-setup', 'I just started a new project'. Trigger this for any request to bootstrap the dev harness — even without the skill name. Do not use for creating harness/ directory only (use harness-init) or CI alone (use harness-ci).
 triggers:
   - setup harness
   - init project

@@ -1,6 +1,6 @@
 ---
 name: harness-work
-description: Executes the next cc:TODO task from plans/ using a Red→Green→Refactor→Gate TDD loop. Detects stack automatically (Node, Ruby, Go, Rust, Python). Use when user says 'harness-work', 'do the work', 'next task', 'implement', 'build this', or 'execute task'. Do not use for planning work (use harness-plan) or reviewing (use harness-review).
+description: Executes the next cc:TODO task from plans/ using a Red→Green→Refactor→Gate TDD loop. Detects stack automatically (Node, Ruby, Go, Rust, Python). Use this whenever the user wants to implement, build, or execute a task — 'implement the next task', 'do the work', 'build this feature', 'next task', 'execute task N.X', 'run the TDD loop', 'harness-work'. Trigger this any time the user says to start coding, work on a task, or build something from the plan — even without naming the skill. Do not use for planning work (use harness-plan) or reviewing (use harness-review).
 triggers:
   - implement
   - execute task

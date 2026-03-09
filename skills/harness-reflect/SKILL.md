@@ -1,6 +1,6 @@
 ---
 name: harness-reflect
-description: Reads the current harness/, collects structured retrospective feedback, and proposes diff-format amendments to gate files and constraint documents — applied only after explicit user acceptance. Use when user says 'harness-reflect', 'retrospective', 'reflect on harness', 'update harness', 'amend harness', or 'harness retrospective'.
+description: Reads the current harness/, collects structured retrospective feedback, and proposes diff-format amendments to gate files — applied only after explicit user acceptance. Use this whenever the user wants to reflect on or improve the harness — 'run a retrospective', 'update the harness gates', 'reflect on what's working', 'amend gate files', 'the coverage gate feels wrong', 'harness-reflect', 'let's review the harness'. Trigger this when the user wants to review and adjust how the development process works — even without naming the skill. Do not use for reviewing code changes (use harness-review).
 triggers:
   - harness-reflect
   - reflect on harness

@@ -1,6 +1,6 @@
 ---
 name: harness-init
-description: Generates the harness/ directory for a project with work.md, review.md, release.md, and gates/ — tailored to the detected stack. Accepts --paradigm flag (web-app, api-service, cli-tool). Use when user says 'harness-init', 'create harness', 'init harness', 'setup harness directory', or 'initialise harness'.
+description: Generates the harness/ directory for a project with work.md, review.md, release.md, and gates/ — tailored to the detected stack. Accepts --paradigm flag (web-app, api-service, cli-tool). Use this whenever the user wants to create or initialise the harness/ directory — 'create the harness directory', 'init harness', 'generate work.md and gates/', 'set up harness/ for my project', 'harness-init', 'I want the harness directory created'. Trigger this when a project needs the harness/ file structure set up. Do not use for creating plans/ and CI (use harness-setup).
 triggers:
   - harness-init
   - init harness

@@ -1,6 +1,6 @@
 ---
 name: harness-cycle
-description: Runs the full development cycle for the next cc:TODO task: TDD loop (Red→Green→Refactor→Gate), structured review, and commit — handling fix iterations automatically. Use when user says 'harness-cycle', 'run the cycle', 'full cycle', 'work and review', 'do the full loop', or 'cycle through the next task'. Do not use for planning (use harness-plan) or for isolated review of existing changes (use harness-review).
+description: Runs the full development cycle for the next cc:TODO task: TDD loop (Red→Green→Refactor→Gate), structured review, and commit — handling fix iterations automatically. Use this whenever the user wants the full loop done end-to-end — 'do the full cycle', 'implement and review the next task', 'work and review', 'automate the work and commit', 'run through the development cycle', 'harness-cycle'. Trigger this as the primary day-to-day command any time the user wants a task implemented and committed without managing each step manually. Do not use for planning (use harness-plan) or isolated review only (use harness-review).
 triggers:
   - harness-cycle
   - run the cycle
