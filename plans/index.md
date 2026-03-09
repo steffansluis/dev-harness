@@ -15,7 +15,8 @@ Each phase lives in its own file. This index links to all phases.
 | [Phase 3](phase-3.md) | Extended Gate Set | complete |
 | [Phase 4](phase-4.md) | Local vs Remote Gates | complete |
 | [Phase 5](phase-5.md) | Paradigms and /harness-reflect | complete |
-| [Phase 6](phase-6.md) | Guide Compliance and Distribution Readiness | active |
+| [Phase 6](phase-6.md) | Guide Compliance and Distribution Readiness | complete |
+| [Phase 7](phase-7.md) | Skill-Creator Compliance and Eval Coverage | active |
 
 ---
 

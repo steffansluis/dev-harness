@@ -1,0 +1,23 @@
+{
+  "skill_name": "harness-plan",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to add a task for implementing dark mode to my app. It should update the UI theme based on the user's system preference.",
+      "expected_output": "Claude reads the active phase file, checks for WIP overload, asks for or derives a user-visible AC ('User sees the app switch to a dark colour scheme when their OS is set to dark mode'), and writes a correctly formatted cc:TODO row to the active phase file.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "what's next? I just finished the search indexing task.",
+      "expected_output": "Claude reads plans/index.md to find the active phase, marks the completed task cc:done, then prints a status summary showing remaining cc:TODO tasks and suggests running /harness-work on the next one.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "plan next phase — Phase 2 is done and I want to focus on payment integration: Stripe checkout, webhook handling, and refund flow.",
+      "expected_output": "Claude confirms Phase 2 is complete, creates plans/phase-3.md with three well-formed task rows for Stripe checkout, webhook handling, and refund flow — each with a user-visible AC — and updates plans/index.md to mark Phase 3 as active.",
+      "files": []
+    }
+  ]
+}

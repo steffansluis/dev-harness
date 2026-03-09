@@ -1,0 +1,23 @@
+{
+  "skill_name": "harness-work",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I just added a new task to plans/phase-3.md for caching API responses in Redis. The task is marked cc:TODO. Can you implement it? I'm on a Node/TypeScript project using bun.",
+      "expected_output": "Claude marks the task cc:WIP, writes a failing test asserting the caching behaviour, runs bun run test to confirm red, writes minimum implementation to pass, refactors, runs lint and tests, then marks the task cc:done with a summary.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Next task please. My project uses Go — go.mod is in the root. The next cc:TODO in plans/phase-2.md is to add a health check endpoint.",
+      "expected_output": "Claude detects Go stack (go test ./..., go vet ./...), marks task cc:WIP, writes a failing test for the health endpoint, implements it, runs go vet and go test, marks cc:done.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "harness-work — the next task is to add input validation to the user registration route. I'm working in a Python project with pytest and ruff.",
+      "expected_output": "Claude detects Python stack (pytest --cov, ruff check .), marks task cc:WIP, writes a failing pytest test for invalid inputs, implements validation, runs ruff and pytest, marks cc:done.",
+      "files": []
+    }
+  ]
+}

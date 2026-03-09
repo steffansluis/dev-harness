@@ -1,0 +1,23 @@
+{
+  "skill_name": "harness-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I just finished all the tasks in Phase 2 of my React Native project. Can you do a harness-review before I start Phase 3?",
+      "expected_output": "Claude runs git diff to get the Phase 2 changes, determines project type (React Native → includes Accessibility dimension), reviews all 4 perspectives, outputs a structured table, and either APPROVEs (offering to commit) or REQUEST_CHANGEs with specific actionable findings.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "review my changes — I added a new user authentication endpoint and updated the JWT middleware in my Express API",
+      "expected_output": "Claude diffs recent changes, identifies it as a Node/API project (skips Accessibility), reviews Security (JWT handling, injection, credential exposure), Performance, and Quality, produces a findings table. If JWT is hardcoded or input not validated, flags as IMPORTANT.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "code review please — I wrote a migration script that reads from a CSV and inserts rows into Postgres. It's a one-off Python script.",
+      "expected_output": "Claude reviews for SQL injection risk (parameterised queries?), large payloads (unbounded CSV load?), error handling (silent swallows?), outputs a structured review table with severity levels and specific file:line references where possible.",
+      "files": []
+    }
+  ]
+}
