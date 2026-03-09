@@ -52,6 +52,27 @@ else
   pass "no stub placeholders"
 fi
 
+# 8. (Phase 4.1) Gates explicitly labelled as local
+if grep -qiE "local gate|local.*gate|run.*local|local.*run" "$FILE"; then
+  pass "gates labelled as local"
+else
+  fail "gates not explicitly labelled as local"
+fi
+
+# 9. (Phase 4.1) 30-second / fast target stated
+if grep -qiE "30 sec|30s|fast|speed|quick|within.*sec" "$FILE"; then
+  pass "speed target for local gates stated"
+else
+  fail "speed target for local gates missing"
+fi
+
+# 10. (Phase 4.1) Contrasts local gates with remote gates
+if grep -qiE "remote gate|remote.*gate|CI.*gate|gate.*CI" "$FILE"; then
+  pass "local/remote gate distinction present"
+else
+  fail "no local/remote gate distinction"
+fi
+
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
 [[ $FAIL -eq 0 ]]

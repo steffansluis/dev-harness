@@ -8,6 +8,8 @@ user-visible behaviour described in the task's AC. Prevents features from reachi
 (Playwright, Cypress, Detox, etc.) and feature tasks have user-visible outcomes
 that can be driven through the UI or API boundary.
 
+**Runs: remote** — the acceptance suite is too slow for local pre-`cc:done` use; runs in CI on push to main or PR open.
+
 ---
 
 ## What It Checks

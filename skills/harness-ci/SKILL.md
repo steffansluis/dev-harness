@@ -35,6 +35,31 @@ If CI config exists → go to Step 4 (Audit).
 
 ---
 
+## Step 2b: Read harness/gates/
+
+If `harness/gates/` exists, read each gate file and check whether it is **enabled** for
+this project (gate file contains `Enabled: default` or the project's `harness/work.md` /
+`harness/release.md` explicitly lists the gate as active).
+
+Build a list of **enabled remote gates** — gates with `Runs: remote` or `Runs: both` that
+are enabled. These gates get additional CI steps added after the standard pipeline.
+
+**Gate → CI step mapping:**
+
+| Gate file | CI step name | Slot in pipeline | Trigger |
+|-----------|-------------|-----------------|---------|
+| `design.md` | `design-check` | after lint | push (all branches) |
+| `readme.md` | `readme-check` | after build | push (all branches) |
+| `acceptance.md` | `acceptance-tests` | after build | push to main / PR open |
+| `screenshots.md` | `screenshot-diff` | after acceptance-tests | PR open only |
+| `i18n.md` | `i18n-check` | after lint | push (all branches) |
+
+Only emit a gate's CI step when that gate is enabled. If the i18n gate is enabled, add an
+`i18n-check` job to the generated CI YAML after the lint job. If no optional gates are
+enabled, generate the standard pipeline without extra steps.
+
+---
+
 ## Step 3: Generate CI Config
 
 Select the matching template from `skills/harness-setup/references/`:

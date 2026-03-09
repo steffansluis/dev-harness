@@ -18,12 +18,16 @@ A commit is ready when:
 
 ---
 
-## CI Gates
+## Remote Gates
 
-CI runs gates in dependency order. Each gate must pass before the next starts:
+**Remote gates** run in CI or on PR open — not on the developer's machine. They are slower
+than local gates (build, acceptance suite, visual diffs) and gate merging to `main`, not
+`cc:done`. See `harness/work.md` for the local gate contract.
+
+CI runs remote gates in dependency order. Each gate must pass before the next starts:
 
 ```
-lint  →  test + coverage  →  build  →  smoke-test  →  acceptance tests
+lint  →  test + coverage  →  build  →  smoke-test  →  acceptance tests  →  screenshot diff
 ```
 
 | Gate | Trigger | Artefact produced |
@@ -33,6 +37,7 @@ lint  →  test + coverage  →  build  →  smoke-test  →  acceptance tests
 | build | push (all branches) | `dist/` directory |
 | smoke-test | push (all branches) | server reachability (curl exit code) |
 | acceptance tests | push to main / PR open | `e2e/report/`, screenshots |
+| screenshot diff | PR open (UI projects only) | diff images, visual regression report |
 
 **Rules:**
 - CI runs on all branches, not just `main` — catch failures before the PR is opened

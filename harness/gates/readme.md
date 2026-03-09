@@ -7,6 +7,8 @@ are modified but the README still describes the old behaviour.
 **Enabled:** opt-in — add this gate when your project has a documented public API,
 CLI interface, or configuration surface that contributors rely on.
 
+**Runs: both** — surfaced during `/harness-review` (local) and enforced as a CI check on PR open (remote).
+
 ---
 
 ## What It Checks

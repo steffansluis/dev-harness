@@ -64,6 +64,27 @@ else
   pass "no stub placeholders"
 fi
 
+# 8. (Phase 4.2) Remote gate framing explicit
+if grep -qiE "remote gate|remote.*gate" "$FILE"; then
+  pass "remote gate framing present"
+else
+  fail "remote gate framing missing"
+fi
+
+# 9. (Phase 4.2) Each remote gate entry has a trigger (push/PR)
+if grep -qiE "push|pull.request|PR open|on.*push|trigger" "$FILE"; then
+  pass "remote gate triggers documented"
+else
+  fail "remote gate triggers missing"
+fi
+
+# 10. (Phase 4.2) Screenshot diff gate listed as remote
+if grep -qiE "screenshot.*diff|screenshot.*remote|visual.*diff|diff.*screenshot" "$FILE"; then
+  pass "screenshot diff gate listed as remote"
+else
+  fail "screenshot diff gate not listed as remote"
+fi
+
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
 [[ $FAIL -eq 0 ]]

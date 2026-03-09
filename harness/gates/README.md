@@ -12,13 +12,13 @@ Each gate file in this directory defines:
 
 ## Available Gates
 
-| Gate file | What it checks | Enabled by default |
-|-----------|---------------|-------------------|
-| [design.md](design.md) | Design artefact linked before `cc:WIP` | opt-in |
-| [readme.md](readme.md) | `README.md` updated when public API surface changes | opt-in |
-| [acceptance.md](acceptance.md) | At least one e2e test per feature task | opt-in |
-| [screenshots.md](screenshots.md) | Before/after screenshots linked for UI tasks | opt-in |
-| [i18n.md](i18n.md) | User-visible strings wrapped in localisation helper | opt-in |
+| Gate file | What it checks | Runs | Enabled by default |
+|-----------|---------------|------|-------------------|
+| [design.md](design.md) | Design artefact linked before `cc:WIP` | local | opt-in |
+| [readme.md](readme.md) | `README.md` updated when public API surface changes | both | opt-in |
+| [acceptance.md](acceptance.md) | At least one e2e test per feature task | remote | opt-in |
+| [screenshots.md](screenshots.md) | Before/after screenshots linked for UI tasks | remote | opt-in |
+| [i18n.md](i18n.md) | User-visible strings wrapped in localisation helper | both | opt-in |
 
 ---
 

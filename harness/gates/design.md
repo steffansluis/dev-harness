@@ -6,6 +6,8 @@ or written specification to verify against.
 
 **Enabled:** opt-in — add this gate when your project requires design sign-off before coding.
 
+**Runs: local** — checked on the developer's machine at the point the task is moved to `cc:WIP`.
+
 ---
 
 ## What It Checks

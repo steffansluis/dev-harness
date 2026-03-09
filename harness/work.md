@@ -80,7 +80,12 @@ Minimum: **80% line and branch coverage** across all files touched by the task.
 
 ---
 
-## Gate Sequence
+## Local Gate Sequence
+
+The gates below are **local gates** — they run on the developer's machine before a task
+moves to `cc:done`. They must complete within **30 seconds** for a typical project. If they
+take longer, investigate: a slow lint pass or large test suite may need parallelisation or
+scoping to changed files only.
 
 Both lint AND tests (with coverage) must pass before marking `cc:done`:
 
@@ -91,3 +96,7 @@ lint  →  test + coverage  →  cc:done
 If lint fails: fix the errors — do not suppress or skip.
 If tests fail: do not mark cc:done; investigate the failure.
 If coverage drops below 80%: add the missing tests before proceeding.
+
+**Remote gates** (build, acceptance tests, screenshot diffs, i18n check) run in CI or on
+PR open and are defined in `harness/release.md`. They do not block `cc:done` locally but
+must pass before merging to the main branch.

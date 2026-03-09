@@ -56,5 +56,12 @@ else
   fail "gate enabled/opt-in status not declared"
 fi
 
+# 7. (Phase 4.4) Declares gate locality with Runs: local | remote | both
+if grep -qE "^(\*\*)?Runs: (local|remote|both)" "$FILE"; then
+  pass "Runs: locality declared"
+else
+  fail "Runs: locality header missing (expected 'Runs: local', 'Runs: remote', or 'Runs: both')"
+fi
+
 echo "  [structure: $PASS passed, $FAIL failed]"
 [[ $FAIL -eq 0 ]]

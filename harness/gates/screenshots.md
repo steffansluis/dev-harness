@@ -7,6 +7,8 @@ visible during review.
 **Enabled:** opt-in — add this gate for web and mobile projects where tasks produce
 visible UI changes. Skip for CLI, API, and library projects with no user interface.
 
+**Runs: remote** — screenshot diff requires a full build and baseline; runs in CI on PR open.
+
 ---
 
 ## What It Checks
