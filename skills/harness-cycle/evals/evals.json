@@ -1,0 +1,89 @@
+{
+  "skill_name": "harness-cycle",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Run the full cycle for the next task. I'm on a Node/TypeScript project using bun and jest. The next cc:TODO in plans/phase-4.md is to add a rate-limiter middleware.",
+      "expected_output": "Claude marks the task cc:WIP, runs the TDD loop (write failing test → implement → refactor → gate), then runs a structured review (Security/Performance/Quality), and on APPROVE marks the task cc:done and commits.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "marks-wip-then-tdd",
+          "text": "Task is marked cc:WIP before any implementation, and the TDD loop (Red → Green → Refactor → Gate) is followed"
+        },
+        {
+          "id": "review-runs-after-gate",
+          "text": "A structured review (Security, Performance, Quality) is run after the gate passes, not before"
+        },
+        {
+          "id": "approve-leads-to-commit",
+          "text": "On APPROVE outcome, task is marked cc:done and a commit is offered or made"
+        },
+        {
+          "id": "cycle-summary-printed",
+          "text": "A cycle summary is printed showing TDD, Review outcome, and AC verification"
+        },
+        {
+          "id": "no-separate-review-invocation-needed",
+          "text": "The full loop completes without requiring the user to manually invoke harness-review"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "harness-cycle — the next task in plans/phase-2.md is to add JWT authentication to the login route. After the TDD loop, the review finds that the token is logged at INFO level, exposing it in logs.",
+      "expected_output": "Claude completes the TDD loop, runs the review, finds the credential exposure as IMPORTANT, outputs REQUEST_CHANGES, fixes the logging, re-runs the gate (passes), re-reviews (no findings), then marks cc:done and commits.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "request-changes-on-important",
+          "text": "Review produces REQUEST_CHANGES when a CRITICAL or IMPORTANT finding is present"
+        },
+        {
+          "id": "fix-and-rereview",
+          "text": "After REQUEST_CHANGES, the finding is fixed and the review is re-run before committing"
+        },
+        {
+          "id": "gate-reruns-after-fix",
+          "text": "Lint and tests are re-run after the fix to confirm the gate still passes"
+        },
+        {
+          "id": "approve-leads-to-commit",
+          "text": "On APPROVE outcome, task is marked cc:done and a commit is offered or made"
+        },
+        {
+          "id": "cycle-summary-printed",
+          "text": "A cycle summary is printed showing TDD, Review outcome, and AC verification"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "do the full loop — my Go project has one cc:TODO task left in phase-1: add a /metrics endpoint that returns request counts as JSON.",
+      "expected_output": "Claude detects Go stack (go test ./..., go vet ./...), marks task cc:WIP, writes a failing test for the /metrics endpoint, implements it, runs go vet and go test, reviews the diff, finds no issues, marks cc:done, and commits.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "marks-wip-then-tdd",
+          "text": "Task is marked cc:WIP before any implementation, and the TDD loop (Red → Green → Refactor → Gate) is followed"
+        },
+        {
+          "id": "review-runs-after-gate",
+          "text": "A structured review (Security, Performance, Quality) is run after the gate passes, not before"
+        },
+        {
+          "id": "approve-leads-to-commit",
+          "text": "On APPROVE outcome, task is marked cc:done and a commit is offered or made"
+        },
+        {
+          "id": "cycle-summary-printed",
+          "text": "A cycle summary is printed showing TDD, Review outcome, and AC verification"
+        },
+        {
+          "id": "no-separate-review-invocation-needed",
+          "text": "The full loop completes without requiring the user to manually invoke harness-review"
+        }
+      ]
+    }
+  ]
+}

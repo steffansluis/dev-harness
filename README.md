@@ -45,8 +45,9 @@ After installing, open any project in Claude Code and run:
 /harness-setup          # scaffold plans/, generate CI config, print .gitignore checklist
 /harness-init           # generate harness/ directory (work.md, review.md, release.md, gates/)
 /harness-plan           # add tasks with acceptance criteria to the active phase
-/harness-work           # execute the next cc:TODO task (TDD loop: Red → Green → Refactor → Gate)
-/harness-review         # structured review between phases
+/harness-cycle          # full loop: TDD → review → fix → commit (primary day-to-day command)
+/harness-work           # TDD loop only (Red → Green → Refactor → Gate), no auto-commit
+/harness-review         # structured review only — use between phases or on specific diffs
 /harness-ci             # generate or audit CI config
 /harness-reflect        # retrospective: propose amendments to harness gates
 ```
@@ -63,6 +64,17 @@ appropriate gate set — ready to start your first task in under 5 minutes.
 ---
 
 ## Skills
+
+### `/harness-cycle`
+The primary day-to-day command. Runs the full development cycle for the next `cc:TODO` task:
+1. **TDD loop** — Red → Green → Refactor → Gate (lint + tests)
+2. **Review** — Security, Performance, Quality perspectives
+3. **Fix loop** — if REQUEST_CHANGES, fixes issues and re-reviews (up to 3 iterations)
+4. **Commit** — marks `cc:done` and commits on APPROVE
+
+Use `/harness-cycle` for normal development. Use the individual skills when you need
+isolated control — e.g. `/harness-work` alone to implement without auto-committing, or
+`/harness-review` alone to review a branch diff.
 
 ### `/harness-setup`
 Scaffolds a development harness for a new or existing project. Creates the `plans/` directory,
