@@ -4,20 +4,86 @@
     {
       "id": 1,
       "prompt": "I just finished all the tasks in Phase 2 of my React Native project. Can you do a harness-review before I start Phase 3?",
-      "expected_output": "Claude runs git diff to get the Phase 2 changes, determines project type (React Native → includes Accessibility dimension), reviews all 4 perspectives, outputs a structured table, and either APPROVEs (offering to commit) or REQUEST_CHANGEs with specific actionable findings.",
-      "files": []
+      "expected_output": "Claude runs git diff to get the Phase 2 changes, determines project type (React Native \u2192 includes Accessibility dimension), reviews all 4 perspectives, outputs a structured table, and either APPROVEs (offering to commit) or REQUEST_CHANGEs with specific actionable findings.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "structured-table-output",
+          "text": "Output includes a structured table with Severity, File, Finding, Fix columns"
+        },
+        {
+          "id": "approve-or-request-changes",
+          "text": "Response includes either APPROVE or REQUEST_CHANGES outcome label"
+        },
+        {
+          "id": "correct-project-type",
+          "text": "Project type is correctly identified (React Native \u2192 Accessibility included; Node/Python API \u2192 Accessibility skipped)"
+        },
+        {
+          "id": "catches-planted-issue",
+          "text": "The planted security/quality issue is caught (JWT secret logged, SQL injection via f-string, or error swallowed in catch)"
+        },
+        {
+          "id": "actionable-findings",
+          "text": "Findings include specific file references or line numbers, not vague suggestions"
+        }
+      ]
     },
     {
       "id": 2,
-      "prompt": "review my changes — I added a new user authentication endpoint and updated the JWT middleware in my Express API",
+      "prompt": "review my changes \u2014 I added a new user authentication endpoint and updated the JWT middleware in my Express API",
       "expected_output": "Claude diffs recent changes, identifies it as a Node/API project (skips Accessibility), reviews Security (JWT handling, injection, credential exposure), Performance, and Quality, produces a findings table. If JWT is hardcoded or input not validated, flags as IMPORTANT.",
-      "files": []
+      "files": [],
+      "assertions": [
+        {
+          "id": "structured-table-output",
+          "text": "Output includes a structured table with Severity, File, Finding, Fix columns"
+        },
+        {
+          "id": "approve-or-request-changes",
+          "text": "Response includes either APPROVE or REQUEST_CHANGES outcome label"
+        },
+        {
+          "id": "correct-project-type",
+          "text": "Project type is correctly identified (React Native \u2192 Accessibility included; Node/Python API \u2192 Accessibility skipped)"
+        },
+        {
+          "id": "catches-planted-issue",
+          "text": "The planted security/quality issue is caught (JWT secret logged, SQL injection via f-string, or error swallowed in catch)"
+        },
+        {
+          "id": "actionable-findings",
+          "text": "Findings include specific file references or line numbers, not vague suggestions"
+        }
+      ]
     },
     {
       "id": 3,
-      "prompt": "code review please — I wrote a migration script that reads from a CSV and inserts rows into Postgres. It's a one-off Python script.",
+      "prompt": "code review please \u2014 I wrote a migration script that reads from a CSV and inserts rows into Postgres. It's a one-off Python script.",
       "expected_output": "Claude reviews for SQL injection risk (parameterised queries?), large payloads (unbounded CSV load?), error handling (silent swallows?), outputs a structured review table with severity levels and specific file:line references where possible.",
-      "files": []
+      "files": [],
+      "assertions": [
+        {
+          "id": "structured-table-output",
+          "text": "Output includes a structured table with Severity, File, Finding, Fix columns"
+        },
+        {
+          "id": "approve-or-request-changes",
+          "text": "Response includes either APPROVE or REQUEST_CHANGES outcome label"
+        },
+        {
+          "id": "correct-project-type",
+          "text": "Project type is correctly identified (React Native \u2192 Accessibility included; Node/Python API \u2192 Accessibility skipped)"
+        },
+        {
+          "id": "catches-planted-issue",
+          "text": "The planted security/quality issue is caught (JWT secret logged, SQL injection via f-string, or error swallowed in catch)"
+        },
+        {
+          "id": "actionable-findings",
+          "text": "Findings include specific file references or line numbers, not vague suggestions"
+        }
+      ]
     }
   ]
 }

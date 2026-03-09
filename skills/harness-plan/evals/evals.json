@@ -5,19 +5,85 @@
       "id": 1,
       "prompt": "I want to add a task for implementing dark mode to my app. It should update the UI theme based on the user's system preference.",
       "expected_output": "Claude reads the active phase file, checks for WIP overload, asks for or derives a user-visible AC ('User sees the app switch to a dark colour scheme when their OS is set to dark mode'), and writes a correctly formatted cc:TODO row to the active phase file.",
-      "files": []
+      "files": [],
+      "assertions": [
+        {
+          "id": "user-visible-ac",
+          "text": "Acceptance criteria is user-visible (starts with 'User sees', 'App stores', etc.) and is not 'tests pass'"
+        },
+        {
+          "id": "correct-table-format",
+          "text": "Task row uses correct format: | N.X | description | AC: ... | cc:TODO |"
+        },
+        {
+          "id": "status-summary-with-next-action",
+          "text": "Status review prints a summary with cc:WIP/cc:TODO tasks and a suggested next action"
+        },
+        {
+          "id": "phase-file-created",
+          "text": "New phase creation produces a phase-N.md file with a task table and correct status markers"
+        },
+        {
+          "id": "wip-check",
+          "text": "Response checks or mentions WIP task count before adding new tasks"
+        }
+      ]
     },
     {
       "id": 2,
       "prompt": "what's next? I just finished the search indexing task.",
       "expected_output": "Claude reads plans/index.md to find the active phase, marks the completed task cc:done, then prints a status summary showing remaining cc:TODO tasks and suggests running /harness-work on the next one.",
-      "files": []
+      "files": [],
+      "assertions": [
+        {
+          "id": "user-visible-ac",
+          "text": "Acceptance criteria is user-visible (starts with 'User sees', 'App stores', etc.) and is not 'tests pass'"
+        },
+        {
+          "id": "correct-table-format",
+          "text": "Task row uses correct format: | N.X | description | AC: ... | cc:TODO |"
+        },
+        {
+          "id": "status-summary-with-next-action",
+          "text": "Status review prints a summary with cc:WIP/cc:TODO tasks and a suggested next action"
+        },
+        {
+          "id": "phase-file-created",
+          "text": "New phase creation produces a phase-N.md file with a task table and correct status markers"
+        },
+        {
+          "id": "wip-check",
+          "text": "Response checks or mentions WIP task count before adding new tasks"
+        }
+      ]
     },
     {
       "id": 3,
-      "prompt": "plan next phase — Phase 2 is done and I want to focus on payment integration: Stripe checkout, webhook handling, and refund flow.",
-      "expected_output": "Claude confirms Phase 2 is complete, creates plans/phase-3.md with three well-formed task rows for Stripe checkout, webhook handling, and refund flow — each with a user-visible AC — and updates plans/index.md to mark Phase 3 as active.",
-      "files": []
+      "prompt": "plan next phase \u2014 Phase 2 is done and I want to focus on payment integration: Stripe checkout, webhook handling, and refund flow.",
+      "expected_output": "Claude confirms Phase 2 is complete, creates plans/phase-3.md with three well-formed task rows for Stripe checkout, webhook handling, and refund flow \u2014 each with a user-visible AC \u2014 and updates plans/index.md to mark Phase 3 as active.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "user-visible-ac",
+          "text": "Acceptance criteria is user-visible (starts with 'User sees', 'App stores', etc.) and is not 'tests pass'"
+        },
+        {
+          "id": "correct-table-format",
+          "text": "Task row uses correct format: | N.X | description | AC: ... | cc:TODO |"
+        },
+        {
+          "id": "status-summary-with-next-action",
+          "text": "Status review prints a summary with cc:WIP/cc:TODO tasks and a suggested next action"
+        },
+        {
+          "id": "phase-file-created",
+          "text": "New phase creation produces a phase-N.md file with a task table and correct status markers"
+        },
+        {
+          "id": "wip-check",
+          "text": "Response checks or mentions WIP task count before adding new tasks"
+        }
+      ]
     }
   ]
 }

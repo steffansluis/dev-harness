@@ -5,19 +5,85 @@
       "id": 1,
       "prompt": "I just added a new task to plans/phase-3.md for caching API responses in Redis. The task is marked cc:TODO. Can you implement it? I'm on a Node/TypeScript project using bun.",
       "expected_output": "Claude marks the task cc:WIP, writes a failing test asserting the caching behaviour, runs bun run test to confirm red, writes minimum implementation to pass, refactors, runs lint and tests, then marks the task cc:done with a summary.",
-      "files": []
+      "files": [],
+      "assertions": [
+        {
+          "id": "marks-wip-before-code",
+          "text": "Response marks task cc:WIP before writing any implementation code"
+        },
+        {
+          "id": "correct-stack-detection",
+          "text": "Stack is detected correctly and the right test command is used (bun run test for bun+jest, go test ./... for Go, pytest --cov for Python)"
+        },
+        {
+          "id": "red-step-explicit",
+          "text": "A failing test is written and run before any implementation code (Red step is explicit)"
+        },
+        {
+          "id": "both-lint-and-test",
+          "text": "Both lint and test commands are run before marking cc:done"
+        },
+        {
+          "id": "marks-done-with-summary",
+          "text": "Task is marked cc:done and a summary is printed with lint/test status and AC restatement"
+        }
+      ]
     },
     {
       "id": 2,
-      "prompt": "Next task please. My project uses Go — go.mod is in the root. The next cc:TODO in plans/phase-2.md is to add a health check endpoint.",
+      "prompt": "Next task please. My project uses Go \u2014 go.mod is in the root. The next cc:TODO in plans/phase-2.md is to add a health check endpoint.",
       "expected_output": "Claude detects Go stack (go test ./..., go vet ./...), marks task cc:WIP, writes a failing test for the health endpoint, implements it, runs go vet and go test, marks cc:done.",
-      "files": []
+      "files": [],
+      "assertions": [
+        {
+          "id": "marks-wip-before-code",
+          "text": "Response marks task cc:WIP before writing any implementation code"
+        },
+        {
+          "id": "correct-stack-detection",
+          "text": "Stack is detected correctly and the right test command is used (bun run test for bun+jest, go test ./... for Go, pytest --cov for Python)"
+        },
+        {
+          "id": "red-step-explicit",
+          "text": "A failing test is written and run before any implementation code (Red step is explicit)"
+        },
+        {
+          "id": "both-lint-and-test",
+          "text": "Both lint and test commands are run before marking cc:done"
+        },
+        {
+          "id": "marks-done-with-summary",
+          "text": "Task is marked cc:done and a summary is printed with lint/test status and AC restatement"
+        }
+      ]
     },
     {
       "id": 3,
-      "prompt": "harness-work — the next task is to add input validation to the user registration route. I'm working in a Python project with pytest and ruff.",
+      "prompt": "harness-work \u2014 the next task is to add input validation to the user registration route. I'm working in a Python project with pytest and ruff.",
       "expected_output": "Claude detects Python stack (pytest --cov, ruff check .), marks task cc:WIP, writes a failing pytest test for invalid inputs, implements validation, runs ruff and pytest, marks cc:done.",
-      "files": []
+      "files": [],
+      "assertions": [
+        {
+          "id": "marks-wip-before-code",
+          "text": "Response marks task cc:WIP before writing any implementation code"
+        },
+        {
+          "id": "correct-stack-detection",
+          "text": "Stack is detected correctly and the right test command is used (bun run test for bun+jest, go test ./... for Go, pytest --cov for Python)"
+        },
+        {
+          "id": "red-step-explicit",
+          "text": "A failing test is written and run before any implementation code (Red step is explicit)"
+        },
+        {
+          "id": "both-lint-and-test",
+          "text": "Both lint and test commands are run before marking cc:done"
+        },
+        {
+          "id": "marks-done-with-summary",
+          "text": "Task is marked cc:done and a summary is printed with lint/test status and AC restatement"
+        }
+      ]
     }
   ]
 }
