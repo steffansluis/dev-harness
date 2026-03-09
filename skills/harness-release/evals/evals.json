@@ -1,0 +1,77 @@
+{
+  "skill_name": "harness-release",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "harness-release — my plugin.json is at version 1.1.0 and I've completed Phase 10 adding the harness-release skill. I want to cut a minor release.",
+      "expected_output": "Claude reads plugin.json (version 1.1.0), proposes 1.2.0 as the next minor version, runs git log to collect commits since the last tag, groups them into a Keep a Changelog entry (Added/Fixed/Changed), prepends CHANGELOG.md, updates plugin.json to 1.2.0, and prints the GitHub Release checklist with the exact tag and push commands.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "reads-current-version",
+          "text": "Claude reads plugin.json or package.json to determine the current version before proposing a bump"
+        },
+        {
+          "id": "proposes-semver-bump",
+          "text": "Claude proposes a specific next version number (patch/minor/major) and explains the rationale"
+        },
+        {
+          "id": "generates-changelog-entry",
+          "text": "A CHANGELOG entry is generated in Keep a Changelog format with grouped commits (Added/Fixed/Changed)"
+        },
+        {
+          "id": "updates-plugin-json",
+          "text": "plugin.json version field is updated to the new version"
+        },
+        {
+          "id": "prints-release-checklist",
+          "text": "A release checklist is printed with git tag, git push --tags, and gh release create commands"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "cut a release — I haven't tagged anything yet. My package.json is at 0.1.0 and I want a patch release.",
+      "expected_output": "Claude reads package.json version (0.1.0), proposes 0.1.1 (patch), falls back to full git log because no tags exist yet, groups commits into a CHANGELOG entry, prepends or creates CHANGELOG.md, updates package.json to 0.1.1, and prints the checklist including git tag v0.1.1.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "handles-no-existing-tags",
+          "text": "When no git tags exist, Claude falls back to the full git log instead of failing"
+        },
+        {
+          "id": "proposes-patch-bump",
+          "text": "Claude proposes the correct patch bump (0.1.0 → 0.1.1)"
+        },
+        {
+          "id": "creates-changelog-if-missing",
+          "text": "If CHANGELOG.md does not exist, Claude creates it with the new entry as the first release"
+        },
+        {
+          "id": "prints-release-checklist",
+          "text": "A release checklist is printed with exact commands for tagging and publishing"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "prepare a release — I want to tag this version but there are still two cc:TODO tasks left in phase-3.",
+      "expected_output": "Claude warns the user that incomplete tasks remain in the active phase, lists the cc:TODO tasks by number and description, and asks for explicit confirmation before proceeding with the release preparation.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "warns-incomplete-tasks",
+          "text": "Claude detects and warns about cc:TODO tasks remaining in the active phase before proceeding"
+        },
+        {
+          "id": "lists-incomplete-tasks",
+          "text": "The warning includes the specific task numbers and descriptions that are not yet done"
+        },
+        {
+          "id": "asks-for-confirmation",
+          "text": "Claude asks the user to confirm they want to proceed with an incomplete phase before writing any files"
+        }
+      ]
+    }
+  ]
+}

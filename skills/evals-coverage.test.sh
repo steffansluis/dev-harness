@@ -9,7 +9,7 @@ fail() { echo "  FAIL: $1"; FAIL=$((FAIL+1)); }
 
 echo "=== evals coverage validation ==="
 
-EVAL_SKILLS=(harness-work harness-review harness-plan harness-cycle)
+EVAL_SKILLS=(harness-work harness-review harness-plan harness-cycle harness-release)
 
 for skill in "${EVAL_SKILLS[@]}"; do
   evals_file="$SKILLS_DIR/$skill/evals/evals.json"
